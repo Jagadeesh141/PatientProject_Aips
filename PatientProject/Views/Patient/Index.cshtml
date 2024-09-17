@@ -1,0 +1,357 @@
+﻿@model IEnumerable<PatientResponse>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Patients";
+    ViewBag.CurrentUrl = "~/patient/index";
+    bool hasData = Model.Any();
+}
+
+
+<div id="dynamic-css"></div>
+<style>
+    .disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+    }
+
+    .button-blue-mix {
+        padding: 4px;
+        font-size: 16px;
+        color: black;
+        border: 2px solid #bcd5c6;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+    }
+
+        .button-blue-mix:hover {
+            background-color: #83b8cb;
+            border-color: #83b8cb;
+            color: #ffffff;
+        }
+
+
+    /* Modal styles */
+    .modal {
+        display: none; /* Initially hidden */
+        position: fixed; /* Stay in place when scrolling */
+        z-index: 1; /* Sit on top of other content */
+        left: 0;
+        top: 0;
+        width: 100%; /* Full width */
+        height: 100%; /* Full height */
+        overflow: auto; /* Enable scroll if needed */
+        background-color: rgba(0,0,0,0.4); /* Black background with transparency */
+    }
+
+        .modal.show { /* Styles when modal is shown */
+            display: block;
+        }
+
+    .modal-dialog { /* Styles for the modal content */
+        background-color: #fefefe;
+        margin: 15% auto; /* 15% from the top and centered */
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%; /* Could adjust width as needed */
+    }
+
+    .modal-header { /* Styles for the header */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #ddd;
+        padding: 1rem 1rem;
+    }
+
+    .modal-title { /* Styles for the modal title */
+        font-size: 1.5rem;
+        font-weight: bold;
+    }
+
+    .modal-body { /* Styles for the modal body */
+        font-size: 1rem;
+    }
+
+    .modal-footer { /* Styles for the footer */
+        display: flex;
+        justify-content: flex-end;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        padding: .75rem;
+        border-top: 1px solid #dee2e6;
+        border-bottom-right-radius: calc(.3rem - 1px);
+        border-bottom-left-radius: calc(.3rem - 1px);
+    }
+    }
+
+        .modal-footer button { /* Styles for buttons */
+            margin: 5px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+    .btn-secondary { /* Styles for the cancel button */
+        background-color: #ccc;
+        color: #333;
+    }
+
+    .btn-danger { /* Styles for the delete button */
+        background-color: #d9534f;
+        color: #fff;
+    }
+
+    /* Close button within the modal header */
+    .close {
+        float: right;
+        cursor: pointer;
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: #aaa;
+        opacity: 0.6;
+        transition: opacity 0.3s;
+    }
+
+        .close:hover, .close:focus {
+            opacity: 1;
+        }
+
+
+
+    .btn:not(:disabled):not(.disabled) {
+        cursor: pointer;
+    }
+
+    [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled) {
+        cursor: pointer;
+    }
+
+    .modal-footer button {
+        margin: 5px;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .modal-body {
+        font-size: 1rem;
+    }
+
+    .modal-body {
+        position: relative;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        padding: 1rem;
+    }
+
+
+    .modal-footer {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .modal-footer {
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-wrap: wrap;
+        flex-wrap: wrap;
+        -ms-flex-align: center;
+        align-items: center;
+        -ms-flex-pack: end;
+        justify-content: flex-end;
+        padding: .75rem;
+        border-top: 1px solid #dee2e6;
+        border-bottom-right-radius: calc(.3rem - 1px);
+        border-bottom-left-radius: calc(.3rem - 1px);
+    }
+
+
+    .modal-content {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        width: 100%;
+        pointer-events: auto;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid rgba(0, 0, 0, .2);
+        /* border-radius: .3rem; */
+        outline: 0;
+        margin: .25rem;
+    }
+
+    .modal-dialog {
+        background-color: #fefefe;
+        margin: 15% auto;
+        padding: 20px;
+        border: 1px solid #888;
+        width: 50%;
+    }
+</style>
+
+<form action="~/patient/index" method="get">
+    <div class="button2">
+        <button type="button" onclick="location.href='/patients/create'" class="button3 button-blue-mix">Add Patient</button>
+        <button type="button" id="downloadPdfBtn" onclick="location.href='/patients/PatientsPdf'" class="button3 button-blue-mix">Download as Pdf</button>
+        <button type="button" id="downloadExcelBtn" onclick="location.href='/patients/PatientsExcel'" class="button3 button-blue-mix">Download as Excel</button>
+    </div>
+
+    <div class="box flex">
+        <div class="flex-1">
+            <select class="form-input-login" name="searchBy">
+                @foreach (var field in ViewBag.SearchField)
+                {
+                    if (field.Key == ViewBag.CurrentSearchBy)
+                    {
+                        <option value="@field.Key" selected="selected">@field.Value</option>
+                    }
+                    else
+                    {
+                        <option value="@field.Key">@field.Value</option>
+                    }
+
+                }
+            </select>
+        </div>
+        <div class="flex-1">
+            <input type="search" id="Search" class="form-input-login" placeholder="Search" name="searchString" value="@ViewBag.CurrentSearchString" />
+        </div>
+        <div class="flex-1">
+            <button class="button-blue-back">
+                <i class="fas fa-search fa-lg"></i>
+            </button>
+            <a href="~/patient/index" class="link-hover">Clear all</a>
+        </div>
+    </div>
+
+    <table class="table w-100 mt">
+        <thead>
+            <tr>
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.PatientId) }, { "DisplayName", "Patient ID" } })
+
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.PatientName) }, { "DisplayName", "Patient Name" } })
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.Email) }, { "DisplayName", "Email" } })
+                @* @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.DateOfBirth) }, { "DisplayName", "Date of Birth" } }) *@
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.Age) }, { "DisplayName", "Age" } })
+                @await Html.PartialAsync("_GridColumnHeader", new ViewDataDictionary(ViewData) { { "ColumnName", nameof(PatientResponse.Gender) }, { "DisplayName", "Gender" } })
+                <th>Country</th>
+                <th>Address</th>
+                <th></th>
+                <th>Options</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PatientResponse patients in Model)
+            {
+                <tr>
+
+
+                    <td style="width:23%">@patients.PatientId</td>
+                    <td style="width:23%">@patients.PatientName</td>
+                    <td style="width:20%">@patients.Email</td>
+                    @* <td style="width:30%">@(patients.DateOfBirth.HasValue ? patients.DateOfBirth.Value.Date.ToString("yyyy-MM-dd") : "")</td> *@
+                    <td style="width:10%">@patients.Age</td>
+                    <td style="width:12%">@patients.Gender</td>
+                    <td style="width:40%">@patients.CountryName</td>
+                    <td style="width:25%">@patients.PresentDoorNo,@patients.PresentStreetName,@patients.PresentTaluk,@patients.PresentState - @patients.PresentPincode </td>
+                    <td style="width:10%; text-align: right">
+                        <a href="~/patients/edit/@patients.PatientId"><i class="fas fa-edit"></i></a>
+                    </td>
+                    <td style="width:10%; text-align:center">
+                        <button type="button" class="button" style="color: red;" data-toggle="modal" data-target="#confirmDeleteModal" data-patient-id="@patients.PatientId">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                    <td style="width:10%">
+                        <a href="~/patients/details/@patients.PatientId" style="color: green;">
+                            <i class="fas fa-eye"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>
+
+<!-- Modal structure -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" role="dialog" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true" style="    z-index: 0;">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmDeleteModalLabel">Confirm Delete</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Are you sure you want to delete this patient?
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form id="deleteForm" method="post">
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Ensure Bootstrap CSS and JavaScript files are loaded before this script -->
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Handle the click event on the delete button to show the modal
+        $('#confirmDeleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var patientId = button.data('patient-id'); // Extract info from data-* attributes
+            var formAction = '/patients/delete/' + patientId; // Construct the form action URL
+
+            var modal = $(this);
+            modal.find('#deleteForm').attr('action', formAction); // Update the form action
+
+            // Dynamically load Bootstrap CSS when the modal is shown
+            // $('head').append('<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" id="bootstrap-css">');
+        });
+
+        // Remove Bootstrap CSS when the modal is hidden
+        $('#confirmDeleteModal').on('hidden.bs.modal', function () {
+            $('#bootstrap-css').remove();
+        });
+    });
+
+    // Generate the correct URL for index.css
+    var cssUrl = '@Url.Content("~/index.css")';
+    // Call the addStylesheet function with the correct URL
+    addStylesheet(cssUrl);
+
+    document.addEventListener("DOMContentLoaded", function () {
+        // Get the data presence status from Razor
+        var hasData = @hasData.ToString().ToLower();
+
+        var downloadPdfBtn = document.getElementById("downloadPdfBtn");
+        var downloadExcelBtn = document.getElementById("downloadExcelBtn");
+
+        if (!hasData) {
+            downloadPdfBtn.disabled = true;
+            downloadExcelBtn.disabled = true;
+            downloadPdfBtn.classList.add("disabled");
+            downloadExcelBtn.classList.add("disabled");
+        }
+    });
+</script>
+

@@ -1,0 +1,147 @@
+﻿@model PatientResponse
+@using ServiceContracts.DTO;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Patient Details";
+    ViewBag.CurrentUrl = "";
+}
+
+
+
+<div id="dynamic-css"></div>
+<div class="icon-container">
+    <a href="~/patient/index" style="float: right;color:red; font-size: 30px;"><i class="fa fa-window-close" aria-hidden="true"></i></a>
+</div>
+
+<div class="patient-details">
+   
+
+    <div class="info-block">
+        <h3>Patient Details</h3>
+
+        <div class="patient-info">
+            <div class="info-item">
+                <label>ID:</label>
+                <p>@Model.PatientId</p>
+            </div>
+            <div class="info-item">
+                <label>Title:</label>
+                <p>@(Model.Title != null ? Model.Title.ToString() : "N/A")</p>
+            </div>
+            <div class="info-item">
+                <label>Name:</label>
+                <p>@Model.PatientName</p>
+            </div>
+
+            <div class="info-item">
+                <label>Email:</label>
+                <p>@Model.Email</p>
+            </div>
+
+            <div class="info-item">
+                <label>Date of Birth:</label>
+                <p>@(Model.DateOfBirth.HasValue ? Model.DateOfBirth.Value.ToShortDateString() : "N/A")</p>
+            </div>
+            <div class="info-item">
+                <label>Age:</label>
+                <p>@Model.Age</p>
+            </div>
+            <div class="info-item">
+                <label>Gender:</label>
+                <p>@Model.Gender</p>
+            </div>
+
+            <div class="info-item">
+                <label>Phone Number:</label>
+                <p>@(Model.Phone != null ? Model.Phone.ToString() : "N/A")</p>
+            </div>
+            <div class="info-item">
+                <label>Aadhar Number:</label>
+                <p>@Model.Aadhar</p>
+            </div>
+
+            <div class="info-item" >
+                <label>Country:</label>
+                <p>@(Model.CountryName != null ? Model.CountryName : "N/A")</p>
+            </div>
+
+            <div class="info-item" ">
+                <label>Religion:</label>
+                <p>@(Model.Religion != null ? Model.Religion.ToString() : "N/A")</p>
+            </div>
+            <div class="info-item">
+                <label>MaritalStatus:</label>
+                <p>@Model.MaritalStatus</p>
+            </div>
+
+            <div class="info-item">
+                <label>Father Name:</label>
+                <p>@Model.FatherName</p>
+            </div>
+            <div class="info-item">
+                <label>Mother Name:</label>
+                <p>@Model.MotherName</p>
+            </div>
+            <div class="info-item">
+                <label>Occupation:</label>
+                <p>@Model.Occupation</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="info-block">
+        <h3>Guardian Details</h3>
+        <div class="patient-info">
+        
+        <div class="info-item">
+            <label>Name:</label>
+            <p>@Model.GuardianName</p>
+        </div>
+        <div class="info-item">
+            <label>Occupation:</label>
+            <p>@Model.GurdainOccupation</p>
+        </div>
+
+        <div class="info-item">
+            <label> PhoneNumber :</label>
+            <p>@Model.GuardianPhoneNumber</p>
+        </div>
+
+        <div class="info-item" >
+            <label>Type:</label>
+            <p>@(Model.Gurdain != null ? Model.Gurdain.ToString() : "N/A")</p>
+        </div>
+
+        <div class="info-item">
+            <label>Detailedinfo :</label>
+            <p>@Model.Detailedinfo</p>
+        </div>
+    </div>
+    </div>
+    
+    
+
+    <div class="info-block">
+        <h3>Address</h3>
+        <div class="patient-info" style="width: 100%;">
+        <div class="info-item" >
+                <label style="width: 100%;">Present  Address :</label>
+            <p>@($"{Model.PresentDoorNo} {Model.PresentStreetName} {Model.PresentPostOffice} {Model.PresentTaluk} {Model.PresentDistrict} {Model.PresentState} - {Model.PresentPincode}")</p>
+        </div>
+
+        <div class="info-item">
+                <label style="width: 100%;">Permanent Address :</label>
+            <p>@($"{Model.PermanentDoorNo} {Model.PermanentStreetName} {Model.PermanentPostOffice} {Model.PermanentTaluk} {Model.PermanentDistrict} {Model.PermanentState} - {Model.PermanentPincode}")</p>
+        </div>
+    </div>
+    </div>
+</div>
+
+
+   <script>
+
+    var cssUrl = '@Url.Content("~/details.css")';
+    // Call the addStylesheet function with the correct URL
+    addStylesheet(cssUrl);
+    </script>

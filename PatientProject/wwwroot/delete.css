@@ -1,0 +1,54 @@
+ .patient-details {
+     background-color: #f0f0f0; /* Background color */
+     border-radius: 5px;
+     padding: 20px;
+     margin-bottom: 20px;
+ }
+
+     .patient-details .info-block {
+         margin-bottom: 20px; /* Add some space between blocks */
+     }
+
+         .patient-details .info-block h3 {
+             margin-bottom: 10px; /* Add some space below the heading */
+         }
+
+     .patient-details .patient-info {
+         display: flex; /* Use flexbox for layout */
+         flex-wrap: wrap; /* Allow items to wrap to the next line */
+     }
+
+     .patient-details .info-item {
+         width: calc(50% - 80px); /* Adjust width as needed */
+         margin-bottom: 10px; /* Add some space between items */
+     }
+
+     .patient-details label {
+         font-weight: bold;
+         color: #333;
+         width: 150px; /* Set label width */
+         display: inline-block; /* Display labels inline */
+     }
+
+     .patient-details p {
+         color: #555;
+         margin: 0; /* Remove default margin */
+         display: inline-block; /* Display values inline */
+     }
+
+
+
+ .address p {
+     white-space: nowrap; /* Prevent line breaks */
+ }
+ .icon-container1 {
+     float: right;
+ }
+
+
+.icon-container a {
+    /* Change color as needed */
+    font-size: 30px; /* Change size as needed */
+    text-decoration: none; /* Remove underline */
+    font-size: 30px;
+}

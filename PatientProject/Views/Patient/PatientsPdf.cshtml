@@ -1,0 +1,54 @@
+﻿@model IEnumerable<PatientResponse>
+@{
+    Layout = null;
+
+
+    }
+
+    <link href="@("http://"+Context.Request.Host.ToString() + "/Style.css")" rel="stylesheet" />
+
+    <h3>Patient Data</h3>
+    <table class=" table w-100 mt">
+        <thead>
+            <tr>
+                <th>Patient Name</th>
+            <th>Email</th>
+            <th>Date Of Birth</th>
+            <th>Age</th>
+            <th>Gender</th>
+            <th>Country name</th>
+            <th>present Address</th>
+            <th>Pernment Address</th>
+            
+                
+                
+                <th> </th>
+
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (PatientResponse patients in Model)
+            {
+                <tr>
+                    @*patient name*@
+                    <td style="width:20%">@patients.PatientName</td>
+
+                    @*Email*@
+                    <td style="width:20%">@patients.Email</td>
+                    @*date of birth*@
+                    <td style="width:20%">@(patients.DateOfBirth.HasValue ? patients.DateOfBirth.Value.Date.ToString("yyyy-MM-dd") : "")</td>
+                    @*age*@
+                    <td style="width:10%">@patients.Age</td>
+                    @*Gender*@
+                    <td style="width:10%">@patients.Gender</td>
+                    @*country name*@
+                    <td style="width:5%">@patients.CountryName</td>
+                    @*Address*@
+                     <td style="width:25%">@patients.PresentDoorNo, @patients.PresentVillageTown, @patients.PresentPostOffice @patients.PresentTaluk ,@patients.PresentDistrict, @patients.PresentState -@patients.PresentPincode</td>
+
+                <td style="width:25%">@patients.PermanentDoorNo @patients.PermanentVillageTown @patients.PermanentPostOffice @patients.PermanentTaluk @patients.PermanentDistrict  @patients.PermanentState @patients.PermanentPincode</td>
+            </tr>
+            }
+
+        </tbody>
+    </table>

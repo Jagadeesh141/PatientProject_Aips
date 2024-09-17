@@ -1,0 +1,76 @@
+.patient-form1 {
+    width: 50%;
+   /* disply: inline-block;*/
+}
+
+.patient-form2 {
+    width: 50%;
+    /*disply: inline-block;*/
+    float: right;
+    margin-top: -23px;
+}
+
+.patient-form3 {
+    width: 50%;
+    /*disply: inline-block;*/
+    float: right;
+}
+
+.patient-form4 {
+    width: 50%;
+    /*disply: inline-block;*/
+    float: right;
+}
+
+.container1 {
+    display: flex;
+}
+
+
+.w-25 {
+    width: 25%;
+    margin-top: -20px;
+}
+
+.w-251 {
+    width: 25%;
+}
+
+.flex-1 {
+    flex: 1 auto;
+    margin-top: -20px;
+}
+
+.flex-11 {
+    flex: 1 auto;
+}
+
+.form-input {
+    width: 85%;
+    padding: 8px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+
+.icon-container {
+    position: fixed;
+    top: 40px; /* Adjust this value to move it down */
+    left: 15px; /* Adjust this value to move it to the right */
+    margin: 20px; /* Optional margin for spacing */
+}
+
+    .icon-container a {
+        color: black; /* Color for the link text */
+        font-size: 30px;
+        text-decoration: none;
+    }
+
+
+
+
+.form-field {
+    margin-bottom: 20px;
+    align-items: center;
+}

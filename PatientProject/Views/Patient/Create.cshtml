@@ -1,0 +1,734 @@
+﻿@using ServiceContracts.DTO;
+@model ServiceContracts.Dto.PatientAddRequest
+
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Create Patient";
+    ViewBag.CurrentUrl = "~/patient/create";
+}
+
+
+
+
+
+
+<div id="dynamic-css"></div>
+<div class="icon-container">
+    <a href="~/patient/index"> <i class="fa fa-arrow-circle-left"></i></a>
+</div>
+
+<div >
+    <h3 style="margin-left: 25%;"> Patient Details</h3>
+
+
+
+<form action="~/patients/create" method="post">
+        
+    <!-- Patient Name -->
+    <div class="container-1">
+        
+        
+        <div class="patient-form2">
+                <div class="form-field flex" style="margin-top: 41px;">
+                <div class="w-25">
+                        <label>Religion<span class="required"></span></label>
+                </div>
+                <div class="flex-1">
+
+                    <select id="Religion" name="Religion" class="form-input" required>
+                        <!-- Add options for different religions -->
+                        <option value="" disabled selected hidden>Please Select</option>
+                        <option value="Christianity">Christianity</option>
+                        <option value="Islam">Islam</option>
+                        <option value="Hinduism">Hinduism</option>
+                        <!-- Add more options as needed -->
+                    </select>
+                        <span asp-validation-for="Religion" class="text-red"></span>
+                </div>
+            </div>
+            <!-- Father Name -->
+            <div class="form-field flex">
+                <div class="w-25">
+                    <label for="FatherName">Father's Name</label>
+                </div>
+                <div class="flex-1">
+                    <input type="text" id="FatherName" name="FatherName" class="form-input" />
+                        <span asp-validation-for="FatherName" class="text-red"></span>
+                </div>
+            </div>
+
+            <!-- Mother Name -->
+            <div class="form-field flex">
+                <div class="w-25">
+                    <label for="MotherName">Mother's Name</label>
+                </div>
+                <div class="flex-1">
+                    <input type="text" id="MotherName" name="MotherName" class="form-input" />
+                        <span asp-validation-for="MotherName" class="text-red"></span>
+
+                </div>
+            </div>
+            <!-- Guardian Name -->
+            <h3  style="text-align:center"> Guardian Details</h3>
+            <div class="form-field flex " style="align-items: center;">
+                <div class="w-251 ">
+                        <label for="GuardianName" > Name<span class="required"></span></label>
+                </div>
+                <div class="flex-11">
+                    <input type="text" id="GuardianName" name="GuardianName" class="form-input" required/>
+                        <span asp-validation-for="GuardianName" class="text-red"></span>
+                </div>
+            </div>
+
+            <!-- Guardian Phone -->
+            <div class="form-field flex">
+                <div class="w-25" style="margin-top:-20px;">
+                        <label for="GuardianPhoneNumber"> Phone<span class="required"></span></label>
+                </div>
+                <div class="flex-1" style="margin-top:-20px;">
+                        <input type="text" id="GuardianPhoneNumber" name="GuardianPhoneNumber" class="form-input" required /><br />
+                        <span asp-validation-for="GuardianPhoneNumber" class="text-red"></span>
+                       
+                </div>
+            </div>
+
+          
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="OccupationSelect">Occupation</label>
+                    </div>
+                    <div class="flex-1">
+                        <select id="OccupationSelect" name="GurdainOccupation" class="form-input" onchange="handleOccupationChange()">
+                            <option value="" disabled selected>Select your occupation</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Student">Student</option>
+                            <option value="Artist">Artist</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="text" id="OccupationText" name="Occupation" class="form-input" style="display:none;" placeholder="Please specify your occupation" /><br />
+                        <span asp-validation-for="GurdainOccupation" class="text-red"></span>
+                    </div>
+                </div>
+
+
+
+            <div class="form-field flex" style="align-items: center;margin-top: -20px;margin-right: 31px;">
+                <div class="w-251">
+                        <label> Type<span class="required"></span></label>
+                </div>
+                <div class="flex-11" style=" margin-right: -30px;">
+
+                        <select id="Gurdain" name="Gurdain" class="form-input" required>
+                        <option value="" disabled selected hidden>Please Select</option>
+                        <!-- Add options for different titles -->
+                        <option value="Father">Father</option>
+                        <option value="Mother">Mother</option>
+                        <option value="Husband">Husband</option>
+                        <option value="Guardian">Guardian</option>
+                        
+                        <!-- Add more options as needed -->
+                    </select><br />
+                        <span asp-validation-for="Gurdain" class="text-red"></span>
+                </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25" style="margin-top:-20px;">
+                        <label for="Detailedinfo">Details information</label>
+                    </div>
+                    <div class="flex-1" style="margin-top:-20px;">
+                        <textarea id="Detailedinfo" name="Detailedinfo" class="form-input"></textarea><br />
+                        <span asp-validation-for="Detailedinfo" class="text-red"></span></div>
+                </div>
+           
+           
+
+
+
+        </div>
+    </div>
+
+    <div>
+        <div class="patient-form1">
+                <div class="form-field flex" >
+                <div class="w-251">
+                        <label>Title<span class="required"></span></label>
+                </div>
+                <div class="flex-11" >
+                    <select id="Title" name="Title" class="form-input" required >
+                        <option value="" disabled selected hidden>Please Select</option>
+                       
+                        <option value="Mr">Mr</option>
+                        <option value="Mrs">Mrs</option>
+                        <option value="Miss">Miss</option>
+                        <option value="Dr">Dr</option>
+                        <option value="Prof">Prof</option>
+                        
+                    </select><br />
+                        <span asp-validation-for="Title" class="text-red"></span>
+                </div>
+            </div>
+            <div class="form-field flex">
+                
+                <div class="w-25">
+                        <label for="PatientName">Patient Name<span class="required"></span></label>
+                </div>
+                <div class="flex-1" >
+                        <input type="text" id="PatientName" name="PatientName" class="form-input" /><br />
+                        <span asp-validation-for="PatientName" class="text-red"></span>
+                </div>
+            </div>
+
+            <!-- Email -->
+            <div class="form-field flex">
+                <div class="w-25 top">
+                        <label for="Email">Email<span class="required"></span></label>
+                </div>
+                <div class="flex-1 top" >
+                        <input type="text" id="Email" name="Email" class="form-input" oninput="this.value = this.value.toLowerCase()" required /><br />
+                        <span asp-validation-for = "Email" class="text-red"></span>
+                </div>
+            </div>
+
+                <!-- Date of Birth -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="DateOfBirth">Date of Birth<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1" >
+                        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-input" onchange="validateDateOfBirth()"
+                               min="1920-01-01" max="{{ DateTime.Today.ToString('yyyy-MM-dd') }}" required/>
+                        <span id="dobError" style="color: red; display: none;">Enter a valid date of birth.</span>
+                        <span asp-validation-for="DateOfBirth" class="text-red"></span>
+                    </div>
+                </div>
+
+                <!-- Display Age -->
+                <div class="form-field flex" >
+                    <div class="w-25">
+                        <label for="Age">Age</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="Age" name="Age" class="form-input" readonly />
+                    </div>
+                </div>
+            <!-- Gender -->
+            <div class="form-field flex">
+                <div class="w-25">
+                        <label>Gender<span class="required"></span></label>
+                </div>
+                <div class="flex-1" style="margin-right: -28px;">
+                    <input type="radio" id="Female" name="Gender" value="Female" />
+                    <label for="Female">Female</label>
+                    <input type="radio" id="Male" name="Gender" value="Male" />
+                    <label for="Male">Male</label>
+                    <input type="radio" id="Others" name="Gender" value="Others" />
+                    <label for="Others">Others</label>
+                        <br /><span asp-validation-for="Gender" class="text-red"></span>
+                </div>
+            </div>
+
+          
+
+            <!-- Phone -->
+            <div class="form-field flex" style="align-items: center;">
+                <div class="w-25">
+                    <label for="Phone" >Phone</label>
+                </div>
+                <div class="flex-1">
+                    <input type="text" id="Phone" name="Phone" class="form-input" style="margin-right: -30px;" /><br />
+                        <span asp-validation-for="Phone" class="text-red"></span>
+                </div>
+            </div>
+
+
+
+                <!-- aadhar number -->
+                <div class="form-field flex" style="align-items: center;">
+                    <div class="w-25">
+                        <label for="Aadhar">Aadhar Number</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="Aadhar" name="Aadhar" class="form-input" /><br />
+                        <span asp-validation-for="Aadhar" class="text-red"></span>
+                    </div>
+                </div>
+
+                <!-- Occupation -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="OccupationSelect">Occupation</label>
+                    </div>
+                    <div class="flex-1">
+                        <select id="OccupationSelect" name="Occupation" class="form-input" onchange="handleOccupationChange()">
+                            <option value="" disabled selected>Select your occupation</option>
+                            <option value="Doctor">Doctor</option>
+                            <option value="Engineer">Engineer</option>
+                            <option value="Teacher">Teacher</option>
+                            <option value="Student">Student</option>
+                            <option value="Artist">Artist</option>
+                            <option value="Other">Other</option>
+                        </select>
+                        <input type="text" id="OccupationText" name="Occupation" class="form-input" style="display:none;" placeholder="Please specify your occupation" />
+                        <br /> <span asp-validation-for="Occupation" class="text-red"></span>
+                    </div>
+                </div>
+
+            @* MaritalStatus *@
+                <div class="form-field flex" style="margin-top:-20px">
+                    <div class="w-25" style="margin-top:0px">
+                        <label for="MaritalStatus">Marital Status<span class="required"></span></label>
+                </div>
+                    <div class="flex-11" >
+                        <select id="MaritalStatus" name="MaritalStatus" class="form-input" required>
+                            <option value="" disabled selected hidden>Please Select</option>
+
+                            <option value="single">Single</option>
+                            <option value="Married">Married</option>
+                            <option value="Divorced">Divorced</option>
+                            <option value="Widowed">Widowed</option>
+                            <option value="Other">Other</option>
+                            
+
+                        </select><br />
+                        <span asp-validation-for="MaritalStatus" class="text-red"></span>
+                    </div>
+            </div>
+           
+           
+        </div>
+
+
+        <div class="patient-form4">
+            <!-- Permanent Address -->
+            <div class="flex-11">
+                    <h3 style="text-align:center;margin-top: -20px;">Permanent Address</h3>
+                <div class="form-field flex">
+                    
+                    
+                    <div class="w-251"></div>
+                    <div class="flex-11">
+                        <label>
+                            <input type="checkbox" id="autoFillCheckbox" onchange="copyPresentAddress()" />  same as the present address
+                        </label>
+                    </div>
+                </div>
+                <div class="form-field flex">
+                    <!-- Permanent Door No -->
+                    <div class="w-25">
+                            <label for="PermanentDoorNo"> Door No<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentDoorNo" name="PermanentDoorNo" class="form-input" required /><br />
+                            <span asp-validation-for="PermanentDoorNo" class="text-red"></span>
+                    </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentStreetName"> Street Name<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentStreetName" name="PermanentStreetName" class="form-input" required /><br />
+                            <span asp-validation-for="PermanentStreetName" class="text-red"></span>
+                    </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentVillageTown">Village/Town<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentVillageTown" name="PermanentVillageTown" class="form-input" required /><br />
+                            <span asp-validation-for="PermanentVillageTown" class="text-red"></span>
+                    </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentPostOffice"> Post Office</label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentPostOffice" name="PermanentPostOffice" class="form-input" /><br />
+                            <span asp-validation-for="PermanentPostOffice" class="text-red"></span>
+                    </div>
+                </div>
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentTaluk">Taluk Name</label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentTaluk" name="PermanentTaluk" class="form-input" /><br />
+                            <span asp-validation-for="PermanentTaluk" class="text-red"></span>
+                    </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentDistrict">District Name</label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentDistrict" name="PermanentDistrict" class="form-input" /><br />
+                            <span asp-validation-for="PermanentDistrict" class="text-red"></span>
+                    </div>
+                </div>
+
+                    <div class="form-field flex" style="margin-top:-20px">
+                        <div class="w-25" style="margin-top:0px">
+                            <label for="PermanentState">State <span class="required"></span></label>
+                    </div>
+                        <div class="flex-11" >
+                            <select id="PermanentState" name="PermanentState" class="form-input" required>
+                                <option value="" disabled selected hidden>Please Select</option>
+                        <option value="AndhraPradesh">Andhra Pradesh</option>
+                        <option value="ArunachalPradesh">Arunachal Pradesh</option>
+                        <option value="Assam">Assam</option>
+                        <option value="Bihar">Bihar</option>
+                        <option value="Chhattisgarh">Chhattisgarh</option>
+                        <option value="Goa">Goa</option>
+                        <option value="Gujarat">Gujarat</option>
+                        <option value="Haryana">Haryana</option>
+                        <option value="Himachal Pradesh">Himachal Pradesh</option>
+                        <option value="Jharkhand">Jharkhand</option>
+                        <option value="Karnataka">Karnataka</option>
+                        <option value="Kerala">Kerala</option>
+                        <option value="Madhya Pradesh">Madhya Pradesh</option>
+                        <option value="Maharashtra">Maharashtra</option>
+                        <option value="Manipur">Manipur</option>
+                        <option value="Meghalaya">Meghalaya</option>
+                        <option value="Mizoram">Mizoram</option>
+                        <option value="Nagaland">Nagaland</option>
+                        <option value="Odisha">Odisha</option>
+                        <option value="Punjab">Punjab</option>
+                        <option value="Rajasthan">Rajasthan</option>
+                        <option value="Sikkim">Sikkim</option>
+                        <option value="TamilNadu">Tamil Nadu</option>
+                        <option value="Telangana">Telangana</option>
+                        <option value="Tripura">Tripura</option>
+                        <option value="UttarPradesh">Uttar Pradesh</option>
+                        <option value="Uttarakhand">Uttarakhand</option>
+                        <option value="WestBengal">West Bengal</option>
+                                <option value="Others">Others</option>
+                            </select><br />
+                            <span asp-validation-for="PermanentState" class="text-red"></span>
+                        </div>
+                        
+                </div>
+
+                  
+
+                    
+
+                    <div class="form-field flex" style="margin-top:-20px">
+                        <div class="w-25" style="margin-top:0px">
+                            <label for="PermanentCountry">Country<span class="required"></span></label>
+                        </div>
+                        <div class="flex-11">
+                            <select id="PermanentCountry" name="PermanentCountry" class="form-input" required>
+                                <option value="" disabled selected hidden>Please Select</option>
+
+                                <option value="" disabled selected>Select your Country</option>
+                                <option value="Philippines">Philippines</option>
+                                <option value="Thailand">Thailand</option>
+                                <option value="China">China</option>
+                                <option value="Palestinian Territory">Palestinian Territory</option>
+                                <option value="India">India</option>
+
+                            </select><br />
+                            <span asp-validation-for="PermanentCountry" class="text-red"></span>
+                        </div>
+                    </div>
+
+
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                            <label for="PermanentPincode">Pincode <span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                            <input type="text" id="PermanentPincode" name="PermanentPincode" class="form-input" required /><br />
+                            <span asp-validation-for="PermanentPincode" class="text-red"></span>
+                    </div>
+                </div>
+                <!-- Other permanent address fields -->
+                <!-- Add other permanent address fields similarly -->
+            </div>
+        </div>
+    <div class="patient-form3">
+
+
+        <!-- Present Address -->
+        <div class="flex-1">
+                    <h3 style="text-align:center">Present Address</h3>
+            <div class="form-field flex">
+                <!-- Present Door No -->
+                <div class="w-251">
+                            <label for="PresentDoorNo"> Door No<span class="required"></span></label>
+                </div>
+                <div class="flex-11">
+                            <input type="text" id="PresentDoorNo" name="PresentDoorNo" class="form-input" onchange="copyPresentAddress()" required /><br />
+                            <span asp-validation-for="PresentDoorNo" class="text-red"></span>
+                </div>
+            </div>
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentStreetName"> Street Name<span class="required"></span></label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentStreetName" name="PresentStreetName" class="form-input" onchange="copyPresentAddress()" required /><br />
+                            <span asp-validation-for="PresentStreetName" class="text-red"></span>
+                </div>
+            </div>
+
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentVillageTown"> Village/Town<span class="required"></span></label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentVillageTown" name="PresentVillageTown" class="form-input" required /><br />
+                            <span asp-validation-for="PresentVillageTown" class="text-red"></span>
+                </div>
+            </div>
+
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentPostOffice"> Post Office</label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentPostOffice" name="PresentPostOffice" class="form-input" /><br />
+                            <span asp-validation-for="PresentPostOffice" class="text-red"></span>
+                </div>
+            </div>
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentTaluk">Taluk Name</label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentTaluk" name="PresentTaluk" class="form-input" /><br />
+                            <span asp-validation-for="PresentTaluk" class="text-red"></span>
+                </div>
+            </div>
+
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentDistrict">District Name</label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentDistrict" name="PresentDistrict" class="form-input" /><br />
+                            <span asp-validation-for="PresentDistrict" class="text-red"></span>
+                </div>
+            </div>
+
+            <div class="form-field flex" style="margin-top:-20px">
+                        <div class="w-25" style="margin-top: 0px;">
+                            <label for="PresentState" >State <span class="required"></span></label>
+                </div>
+                        <div class="flex-11" >
+                            <select id="PresentState" name="PresentState" class="form-input" required>
+                                <option value="" disabled selected hidden>Please Select</option>
+                                <option value="AndhraPradesh">Andhra Pradesh</option>
+                                <option value="ArunachalPradesh">Arunachal Pradesh</option>
+                                <option value="Assam">Assam</option>
+                                <option value="Bihar">Bihar</option>
+                                <option value="Chhattisgarh">Chhattisgarh</option>
+                                <option value="Goa">Goa</option>
+                                <option value="Gujarat">Gujarat</option>
+                                <option value="Haryana">Haryana</option>
+                                <option value="Himachal Pradesh">Himachal Pradesh</option>
+                                <option value="Jharkhand">Jharkhand</option>
+                                <option value="Karnataka">Karnataka</option>
+                                <option value="Kerala">Kerala</option>
+                                <option value="Madhya Pradesh">Madhya Pradesh</option>
+                                <option value="Maharashtra">Maharashtra</option>
+                                <option value="Manipur">Manipur</option>
+                                <option value="Meghalaya">Meghalaya</option>
+                                <option value="Mizoram">Mizoram</option>
+                                <option value="Nagaland">Nagaland</option>
+                                <option value="Odisha">Odisha</option>
+                                <option value="Punjab">Punjab</option>
+                                <option value="Rajasthan">Rajasthan</option>
+                                <option value="Sikkim">Sikkim</option>
+                                <option value="TamilNadu">Tamil Nadu</option>
+                                <option value="Telangana">Telangana</option>
+                                <option value="Tripura">Tripura</option>
+                                <option value="UttarPradesh">Uttar Pradesh</option>
+                                <option value="Uttarakhand">Uttarakhand</option>
+                                <option value="WestBengal">West Bengal</option>
+                                <option value="Others">Others</option>
+                            </select><br />
+                            <span asp-validation-for="PresentState" class="text-red"></span>
+                        </div>
+            </div>
+
+                    <!-- Country -->
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="CountryId">Country<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1" >
+                            <select name="CountryId" id="CountryID" class="form-input" required>
+                                <option value="">Please Select</option>
+                                @foreach (CountryResponse country in ViewBag.CountryList)
+                                {
+                                    <option value="@country.CountryID">@country.CountryName</option>
+                                }
+                            </select>
+                           
+                        </div>
+                    </div>
+
+
+
+
+
+
+            <div class="form-field flex">
+                <div class="w-25">
+                            <label for="PresentPincode">Pincode<span class="required"></span> </label>
+                </div>
+                <div class="flex-1">
+                            <input type="text" id="PresentPincode" name="PresentPincode" class="form-input" required /><br />
+                            <span asp-validation-for="PresentPincode" class="text-red"></span>
+                </div>
+              
+            </div>
+            </div>
+            <div class="form-field flex">
+                <div class="w-25"></div>
+                <div class="flex-1" >
+                    <button class="button button-blue-back">ADD</button>
+                        <button type="button" onclick="location.href='/patients/create'" class="button button-blue-back">Clear</button>
+                   @*  @if (ViewBag.Errors != null)
+                    {
+                        <div class="text-red ml">
+                            <ul>
+                                @foreach (string error in ViewBag.Errors)
+                                {
+                                    <li class="ml">@error</li>
+                                }
+                            </ul>
+                        </div>
+                    } *@
+                </div>
+            </div>
+                
+                    
+    </div>
+        
+    </div>
+    
+    
+</form>
+</div>
+<script>
+    // Function to copy present address to permanent address fields
+    function copyPresentAddress() {
+        if (document.getElementById('autoFillCheckbox').checked) {
+            // Copy present address fields to permanent address fields
+            document.getElementById('PermanentDoorNo').value = document.getElementById('PresentDoorNo').value;
+            document.getElementById('PermanentStreetName').value = document.getElementById('PresentStreetName').value;
+            document.getElementById('PermanentVillageTown').value = document.getElementById('PresentVillageTown').value;
+            document.getElementById('PermanentPostOffice').value = document.getElementById('PresentPostOffice').value;
+            document.getElementById('PermanentTaluk').value = document.getElementById('PresentTaluk').value;
+            document.getElementById('PermanentDistrict').value = document.getElementById('PresentDistrict').value;
+            document.getElementById('PermanentState').value = document.getElementById('PresentState').value;
+            document.getElementById('PermanentPincode').value = document.getElementById('PresentPincode').value;
+            var presentCountry = document.getElementById('CountryID');
+            var permanentCountry = document.getElementById('PermanentCountry');
+            var selectedCountry = presentCountry.options[presentCountry.selectedIndex].text;
+            permanentCountry.value = selectedCountry;
+        } else {
+            // Clear permanent address fields
+            document.getElementById('PermanentDoorNo').value = '';
+            document.getElementById('PermanentStreetName').value = '';
+            document.getElementById('PermanentVillageTown').value = '';
+            document.getElementById('PermanentPostOffice').value = '';
+            document.getElementById('PermanentTaluk').value = '';
+            document.getElementById('PermanentDistrict').value = '';
+            document.getElementById('PermanentState').value = '';
+            document.getElementById('PermanentPincode').value = '';
+            document.getElementById('PermanentCountry').value = '';
+        }
+    }
+
+
+
+
+    
+        function hidePlaceholder() {
+            // Hide the "Please Select" option
+            document.getElementById("Religion").removeAttribute("hidden");
+        }
+
+
+
+    function calculateAge() {
+        var dobInput = document.getElementById('DateOfBirth').value;
+        var dob = new Date(dobInput);
+        if (isNaN(dob.getTime())) {
+            document.getElementById('Age').value = "Invalid date";
+            return;
+        }
+
+        var today = new Date();
+        var age = today.getFullYear() - dob.getFullYear();
+        var monthDiff = today.getMonth() - dob.getMonth();
+
+        if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < dob.getDate())) {
+            age--;
+        }
+
+        document.getElementById('Age').value = age;
+    }
+
+    function validateDateOfBirth() {
+        var dobInput = document.getElementById("DateOfBirth");
+        var dobError = document.getElementById("dobError");
+        var dob = new Date(dobInput.value);
+        var minDate = new Date("1920-01-01");
+        var maxDate = new Date(); // Today's date
+
+        if (dob.toString() === "Invalid Date" || dob < minDate || dob > maxDate) {
+            dobError.style.display = "block";
+            dobInput.setCustomValidity("Invalid date of birth");
+            document.getElementById('Age').value = ""; // Clear the age field on invalid date
+        } else {
+            dobError.style.display = "none";
+            dobInput.setCustomValidity("");
+            calculateAge(); // Call calculateAge to update the age
+        }
+    }
+
+
+
+    var cssUrl = '@Url.Content("~/create.css")';
+    // Call the addStylesheet function with the correct URL
+    addStylesheet(cssUrl);
+
+
+    function handleOccupationChange() {
+        var occupationSelect = document.getElementById("OccupationSelect");
+        var occupationText = document.getElementById("OccupationText");
+
+        if (occupationSelect.value === "Other") {
+            occupationSelect.style.display = "none";
+            occupationText.style.display = "block";
+            occupationText.value = "";  // Clear the text box when it becomes visible
+        } else {
+            occupationSelect.style.display = "block";
+            occupationText.style.display = "none";
+        }
+    }
+
+
+</script>
+
+
+
+
+
+

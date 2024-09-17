@@ -1,0 +1,86 @@
+﻿@model Login;
+@{
+    ViewBag.Title = "Login";
+    ViewBag.CurrentUrl = "~/Accounts/Login";
+}
+
+
+
+<div class="form-container">
+    
+
+    
+    
+    <h2 class="text-center">Login</h2>
+        <div class="form-inner">
+    <form asp-controller="Accounts" asp-action="Login" method="Post" class="login">
+
+
+       
+
+
+        @*Email*@
+        <div class="form-field flex">
+            <div class="w-25">
+                    <label asp-for="Email" class="form-label pt">Email<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                    <input asp-for="Email" class="form-input-login" />
+                <span asp-validation-for="Email" class="text-red"></span>
+            </div>
+        </div>
+        
+
+        @*Password*@
+        <div class="form-field flex">
+            <div class="w-25">
+                    <label asp-for="Password" class="form-label pt">Password<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                    <input asp-for="Password" class="form-input-login" />
+                <span asp-validation-for="Password" class="text-red"></span>
+            </div>
+        </div>
+
+        <div class=" text-left" >Not Yet  Registered? <a asp-action="Register" asp-controller="Accounts">Register</a></div>
+
+
+        @*Login*@
+        <div class="form flex">
+            <div class="w-50"></div>
+            <div class="flex-1">
+                <button class="button button-green-back " type="submit">Login</button>
+                <div asp-validation-summary="All" class="text-red"></div>
+
+                @if (ViewBag.Errors != null)
+                {
+                    <div class="text-red ml">
+                        <ul>
+                            @foreach (string error in ViewBag.Errors)
+                            {
+                                <li class="ml"></li>
+                            }
+                        </ul>
+                    </div>
+
+                    }
+
+            </div>
+        </div>
+            <a href="/Accounts/ForgotPassword">Forgot Password?</a>
+
+
+    </form>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" asp-fallback-test="window.jQuery" asp-fallback-src="~/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" asp-fallback-test="window.jQuery.validator" asp-fallback-src="~/jquery.validate.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-fallback-test="window.jQuery.validator.unobstrusive" asp-fallback-src="~/jquery.validate.unobtrusive.min.js"></script>
+}

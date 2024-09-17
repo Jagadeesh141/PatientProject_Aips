@@ -1,0 +1,43 @@
+﻿<!-- _LoginFormPartial.cshtml -->
+<div class="wrapper">
+    
+    <div class="form-container">
+       
+        <div class="form-inner">
+            <form asp-controller="Accounts" asp-action="Login" method="Post" class="login">
+                <div class="field">
+                    <input type="text" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                
+                <div class="field btn">
+                    <button class="button button-green-back " type="submit">Login</button>
+                    <div asp-validation-summary="All" class="text-red"></div>
+                </div>
+                <div class="signup-link">Not a member? <a href="">Signup now</a></div>
+            </form>
+            <form asp-controller="Accounts" asp-action="Register" method="Post" class="signup">
+                <div class="field">
+                    <input type="text" placeholder="Email Address" required>
+                </div>
+                <div class="field">
+                    <input type="password" placeholder="Password" required>
+                </div>
+                <div class="field">
+
+                    @*<input asp-for="ConfirmPassword" class="form-input" />
+                    <span asp-validation-for="ConfirmPassword" placeholder="Confirm password" class="text-red"></span>*@
+                </div>
+                <div class="field btn">
+                    <div class="btn-layer"></div>
+                    <button class="button button-green-back" type="submit">Register</button>
+                    <div asp-validation-summary="All" class="text-red"></div>
+
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,99 @@
+﻿
+@model Register;
+@{
+    ViewBag.Title = "Register";
+    ViewBag.CurrentUrl = "~/Accounts/Register";
+}
+
+
+<div class="wrapper">
+<div class="form-container">
+
+
+        <h2 class="text-center">Register</h2>
+        <div class="form-inner">
+    Already Registered? <a asp-action="Login" asp-controller="Accounts">Login</a>
+    
+
+    <form asp-controller="Accounts" asp-action="Register" method="Post">
+
+
+        @*name*@
+        <div class="form-field flex">
+            <div class="w-25">
+                        <label asp-for="PersonName" class="form-label pt">Name<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                        <input asp-for="PersonName" class="form-input-login" />
+                <span asp-validation-for="PersonName" class="text-red"></span>
+            </div>
+        </div>
+
+
+        @*Email*@
+        <div class="form-field flex">
+            <div class="w-25">
+                        <label asp-for="Email" class="form-label pt">Email<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                        <input asp-for="Email" class="form-input-login" />
+                <span asp-validation-for="Email" class="text-red"></span>
+            </div>
+        </div>
+        @*phone number*@
+        <div class="form-field flex">
+            <div class="w-25">
+                        <label asp-for="Phone" class="form-label pt">Phone Number<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                        <input asp-for="Phone" class="form-input-login" />
+                <span asp-validation-for="Phone" class="text-red"></span>
+            </div>
+        </div>
+
+        @*Password*@
+        <div class="form-field flex">
+            <div class="w-25">
+                        <label asp-for="Password" class="form-label pt">Password<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                        <input asp-for="Password" class="form-input-login" />
+                <span asp-validation-for="Password" class="text-red"></span>
+            </div>
+        </div>
+
+        @*confirm password*@
+        <div class="form-field flex">
+            <div class="w-25">
+                        <label asp-for="ConfirmPassword" class="form-label pt">Confirm Password<span class="required"></span></label>
+            </div>
+            <div class="flex-1">
+                        <input asp-for="ConfirmPassword" class="form-input-login" />
+                <span asp-validation-for="ConfirmPassword" class="text-red"></span>
+            </div>
+        </div>
+
+
+        @*Register*@
+        <div class="form flex">
+            <div class="w-43"></div>
+            <div class="flex-1">
+                <button class="button button-green-back" type="submit">Register</button>
+                        
+                    
+            </div>
+        </div>
+
+    </form>
+</div>
+    </div>
+</div>
+
+@section scripts
+                {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" asp-fallback-test="window.jQuery" asp-fallback-src="~/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.4/jquery.validate.min.js" asp-fallback-test="window.jQuery.validator" asp-fallback-src="~/jquery.validate.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js" asp-fallback-test="window.jQuery.validator.unobstrusive" asp-fallback-src="~/jquery.validate.unobtrusive.min.js"></script>
+}

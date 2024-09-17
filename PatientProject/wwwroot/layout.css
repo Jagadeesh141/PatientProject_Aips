@@ -1,0 +1,66 @@
+    /* Dropdown container */
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    /* Dropdown content (hidden by default) */
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        min-width: 160px;
+        z-index: 1;
+        left: 10px;
+        margin-left: -109px;
+    }
+
+        /* Links inside the dropdown */
+        .dropdown-content a {
+            color: #333;
+            padding: 12px 16px;
+            display: block;
+            text-decoration: none;
+        }
+
+            /* Change color on hover */
+            .dropdown-content a:hover {
+                background-color: #f9f9f9;
+            }
+
+    /* Show the dropdown menu */
+    .show {
+        display: block;
+    }
+
+    /* Icon */
+    .dropdown .icon {
+        cursor: pointer;
+    }
+
+    /* Menu Icon */
+    .menu-icon {
+        font-size: 24px;
+        color: #555;
+    }
+
+    /* Container for content with full screen height */
+    .content-container {
+        height: calc(100vh - 70px); /* Adjust 70px to match your navbar height */
+        overflow-y: auto;
+    }
+
+    /* Page content */
+    .page-content {
+        padding: 20px;
+    }
+
+    /* Body styles to hide scrollbar */
+    body {
+        overflow: hidden;
+    }
+
+/*
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" >*/

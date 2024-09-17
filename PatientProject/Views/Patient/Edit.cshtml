@@ -1,0 +1,753 @@
+﻿@model PatientUpdateRequest
+@using ServiceContracts.DTO;
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit Patient";
+    ViewBag.CurrentUrl = "~/patient/edit";
+}
+
+
+
+
+
+<div id="dynamic-css"></div>
+<div class="icon-container">
+    <a href="~/patient/index"> <i class="fa fa-arrow-circle-left"></i></a>
+</div>
+
+<div>
+    <h3 style="margin-left: 25%;"> Patient Details</h3>
+
+
+
+    <form action="~/patients/edit/@Model.PatientId" method="post">
+        <!-- Patient Name -->
+        <div class="container-1">
+
+
+            <div class="patient-form2">
+                <div class="form-field flex" style="margin-top: 41px;">
+                    <div class="w-25">
+                        <label>Religion<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                        <select id="Religion" name="Religion" class="form-input" required>
+                            <option value="" disabled hidden>Please Select</option>
+
+                            @{
+                                var religionOptions = new List<string> { "Christianity", "Islam", "Hinduism" }; // Add more options as needed
+                                var modelReligion = Model.Religion.HasValue ? Model.Religion.ToString() : null;
+                            }
+
+                            @foreach (var religionOption in religionOptions)
+                            {
+                                var selected = religionOption == modelReligion ? "selected" : "";
+                                <option value="@religionOption" selected="@selected">@religionOption</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+                <!-- Father Name -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="FatherName">Father's Name</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="FatherName" name="FatherName" class="form-input" value="@Model.FatherName" />
+                    </div>
+                </div>
+
+                <!-- Mother Name -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="MotherName">Mother's Name</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="MotherName" name="MotherName" class="form-input" value="@Model.MotherName" />
+                    </div>
+                </div>
+                <!-- Guardian Name -->
+                <h3 style="text-align:center"> Guardian Details</h3>
+                <div class="form-field flex " style="align-items: center;">
+                    <div class="w-251 ">
+                        <label for="GuardianName"> Name<span class="required"></span></label>
+                    </div>
+                    <div class="flex-11">
+                        <input type="text" id="GuardianName" name="GuardianName" class="form-input" value="@Model.GuardianName" required/>
+                    </div>
+                </div>
+
+                <!-- Guardian Phone -->
+                <div class="form-field flex">
+                    <div class="w-25" style="margin-top:-20px;">
+                        <label for="GuardianPhoneNumber"> Phone<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1" style="margin-top:-20px;">
+                        <input type="text" id="GuardianPhoneNumber" name="GuardianPhoneNumber" class="form-input" value="@Model.GuardianPhoneNumber" required />
+                    </div>
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="GurdainOccupationSelect">Occupation</label>
+                    </div>
+                    <div class="flex-1">
+                        @{
+                            var opoccupations = new List<string> { "Doctor", "Engineer", "Teacher", "Student", "Artist", "Other" };
+                            var selectedOcc = Model.GurdainOccupation;
+                            var isOthers = string.IsNullOrEmpty(selectedOcc);
+                        }
+                        @* <select id="GurdainOccupationSelect" name="GurdainOccupation" class="form-input" onchange="handleGurdainOccupationChange()"
+                                style="display:@(isOthers ? "none" : "block");"> *@
+                            <select id="GurdainOccupationSelect" name="GurdainOccupation" class="form-input" onchange="handleOccupationChange('GurdainOccupationSelect', 'GurdainOccupationText')"
+                                    style="display:@(isOthers ? "none" : "block");">
+
+                            <option value="" disabled selected>Select guardian's occupation</option>
+                            @foreach (var occupation in opoccupations)
+                            {
+                                if (occupation == selectedOcc)
+                                {
+                                    <option value="@occupation" selected>@occupation</option>
+                                }
+                                else
+                                {
+                                    <option value="@occupation">@occupation</option>
+                                }
+                            }
+                        </select>
+                        <input type="text" id="GurdainOccupationText" name="GurdainOccupation" class="form-input"
+                               style="display:@(isOthers ? "block" : "none");"
+                               value="@Model.GurdainOccupation"
+                               placeholder="Please specify guardian's occupation" />
+                    </div>
+                </div>
+
+
+
+                <div class="form-field flex" style="align-items: center;margin-top: -20px;margin-right: 31px;">
+                    <div class="w-251">
+                        <label> Type<span class="required"></span></label>
+                    </div>
+                    <div class="flex-11" style="margin-right: -30px;">
+                        <select id="Gurdain" name="Gurdain" class="form-input" required>
+                            <option value="" disabled hidden>Please Select</option>
+
+                            @{
+                                var gurdainOptions = new List<string> { "Father", "Mother", "Husband", "Guardian" };
+                                var modelGurdain = Model.Gurdain.HasValue ? Model.Gurdain.ToString() : null;
+                            }
+
+                            @foreach (var gurdainOption in gurdainOptions)
+                            {
+                                var selected = gurdainOption == modelGurdain ? "selected" : "";
+                                <option value="@gurdainOption" selected="@selected">@gurdainOption</option>
+                            }
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-field flex">
+                    <div class="w-25" style="margin-top:-20px;">
+                        <label for="Detailedinfo">Detailedinfo</label>
+                    </div>
+                    <div class="flex-1" style="margin-top:-20px;">
+                        <textarea id="Detailedinfo" name="Detailedinfo" class="form-input" >@Model.Detailedinfo</textarea>
+                    </div>
+                </div>
+
+
+
+
+
+            </div>
+        </div>
+
+
+        @*patient Details*@
+        <div>
+            <div class="patient-form1">
+                <div class="form-field flex">
+                    <div class="w-251">
+                        <label>Title<span class="required"></span></label>
+                    </div>
+                    <div class="flex-11" style="margin-right: -30px;">
+                        <select id="Title" name="Title" class="form-input" required>
+                            <option value="" disabled hidden>Please Select</option>
+
+                            @{
+                                var titleOptions = new List<string> { "Mr", "Mrs", "Miss", "Dr", "Prof" };
+                                var modelTitle = Model.Title.HasValue ? Model.Title.ToString() : null;
+                            }
+
+                            @foreach (var titleOption in titleOptions)
+                            {
+                                var selected = titleOption == modelTitle ? "selected" : "";
+                                <option value="@titleOption" selected="@selected">@titleOption.</option>
+                            }
+                        </select>
+                    </div>
+
+
+
+
+                </div>
+                <div class="form-field flex">
+
+                    <div class="w-25">
+                        <label for="PatientName">Patient Name<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1" style="margin-right: -30px;">
+                        <input type="text" id="PatientName" name="PatientName" class="form-input" value="@Model.PatientName" required/>
+                    </div>
+                </div>
+
+                <!-- Email -->
+                <div class="form-field flex">
+                    <div class="w-25 top">
+                        <label for="Email">Email<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1 top" style="margin-right: -30px;">
+                        <input type="text" id="Email" name="Email" class="form-input" oninput="this.value = this.value.toLowerCase()" value="@Model.Email" readonly />
+                    </div>
+                </div>
+
+                <!-- Date of Birth -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="DateOfBirth">Date of Birth<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1" style="margin-right: -28px;">
+                        <input type="date" id="DateOfBirth" name="DateOfBirth" class="form-input" value="@ViewBag.DateOfBirth" required/>
+                    </div>
+                </div>
+
+                <!-- Gender -->
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label>Gender<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1" style="margin-right: -28px;">
+                        <input type="radio" id="Female" name="Gender" value="Female" @(Model.Gender == GenderOptions.Female ? "checked" : "") />
+                        <label for="Female">Female</label>
+
+                        <input type="radio" id="Male" name="Gender" value="Male" @(Model.Gender == GenderOptions.Male ? "checked" : "") />
+                        <label for="Male">Male</label>
+
+                        <input type="radio" id="Others" name="Gender" value="Others" @(Model.Gender == GenderOptions.Others ? "checked" : "") />
+                        <label for="Others">Others</label>
+                    </div>
+                </div>
+
+               
+               
+
+                <!-- Phone -->
+                <div class="form-field flex" style="align-items: center;">
+                    <div class="w-25">
+                        <label for="Phone">Phone</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="Phone" name="Phone" class="form-input" style="margin-right: -30px;" value="@Model.Phone"/>
+                    </div>
+                </div>
+                <!-- Aadhar no -->
+                <div class="form-field flex" style="align-items: center;">
+                    <div class="w-25">
+                        <label for="Aadhar">Aadhar Number</label>
+                    </div>
+                    <div class="flex-1">
+                        <input type="text" id="Aadhar" name="Aadhar" class="form-input" value="@Model.Aadhar"/>
+                    </div>
+                </div>
+
+                <!-- Occupation -->
+               
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="OccupationSelect">Occupation</label>
+                    </div>
+                    <div class="flex-1">
+                        @{
+                            var occupations = new List<string> { "Doctor", "Engineer", "Teacher", "Student", "Artist", "Other" };
+                            var selectedOccupation = Model.Occupation;
+                            var isOther = !occupations.Contains(selectedOccupation);
+                        }
+                        @* <select id="OccupationSelect" name="Occupation" class="form-input" onchange="handleOccupationChange()"
+                                style="display:@(isOther ? "none" : "block");"> *@
+                            <select id="OccupationSelect" name="Occupation" class="form-input" onchange="handleOccupationChange('OccupationSelect', 'OccupationText')"
+                                    style="display:@(isOther ? "none" : "block");">
+
+                            <option value="" disabled selected>Select your occupation</option>
+                            @foreach (var occupation in occupations)
+                            {
+                                if (occupation == selectedOccupation)
+                                {
+                                    <option value="@occupation" selected>@occupation</option>
+                                }
+                                else
+                                {
+                                    <option value="@occupation">@occupation</option>
+                                }
+                            }
+                        </select>
+                        <input type="text" id="OccupationText" name="Occupation" class="form-input"
+                               style="display:@(isOther ? "block" : "none");"
+                               value="@(isOther ? selectedOccupation : "")"
+                               placeholder="Please specify your occupation" />
+                    </div>
+                </div>
+
+             
+
+
+
+
+
+
+
+                @* MaritalStatus *@
+               
+
+                <div class="form-field flex">
+                    <div class="w-25">
+                        <label for="MaritalStatus">Marital Status<span class="required"></span></label>
+                    </div>
+                    <div class="flex-1">
+                        <select id="MaritalStatus" name="MaritalStatus" class="form-input" required>
+                            <option value="" disabled hidden>Please Select</option>
+
+                            @{
+                                var maritalStatusOptions = new List<string>
+                            {
+                            "single",
+                            "Married",
+                            "Divorced",
+                            "Widowed",
+                            "Other"
+                           
+                            };
+
+                                var modelMaritalStatus = Model.MaritalStatus?.ToString().Replace(" ", string.Empty); // Convert the enum to a string and remove spaces
+                            }
+
+                            @foreach (var maritalStatusOption in maritalStatusOptions)
+                            {
+                                var MaritaOptionValue = maritalStatusOption.Replace(" ", string.Empty);
+                                if (MaritaOptionValue == modelMaritalStatus)
+                                {
+                                    <option value="@MaritaOptionValue" selected>@maritalStatusOption</option>
+                                }
+                                else
+                                {
+                                    <option value="@MaritaOptionValue">@maritalStatusOption</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+                
+
+            </div>
+
+            <div class="patient-form3" style="float: left;">
+
+
+                <!-- Present Address -->
+                <div class="flex-1">
+                    <h3 style="text-align:center">Present Address</h3>
+                    <div class="form-field flex">
+                        <!-- Present Door No -->
+                        <div class="w-251">
+                            <label for="PresentDoorNo"> Door No<span class="required"></span></label>
+                        </div>
+                        <div class="flex-11">
+                            <input type="text" id="PresentDoorNo" name="PresentDoorNo" class="form-input" onchange="copyPresentAddress()" value="@Model.PresentDoorNo" />
+                        </div>
+                    </div>
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentStreetName"> Street Name<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentStreetName" name="PresentStreetName" class="form-input" onchange="copyPresentAddress()" value="@Model.PresentStreetName" />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentVillageTown"> Village/Town<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentVillageTown" name="PresentVillageTown" class="form-input" value="@Model.PresentVillageTown" />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentPostOffice"> Post Office</label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentPostOffice" name="PresentPostOffice" class="form-input" value="@Model.PresentPostOffice" />
+                        </div>
+                    </div>
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentTaluk">Taluk </label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentTaluk" name="PresentTaluk" class="form-input" value="@Model.PresentTaluk" />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentDistrict">District </label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentDistrict" name="PresentDistrict" class="form-input" value="@Model.PresentDistrict" />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentState">State<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <select id="PresentState" name="PresentState" class="form-input" required>
+                                <option value="" disabled hidden>Please Select</option>
+
+                                @{
+                                    var stateOptions = new List<string>
+                                {
+                                "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+                                "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh",
+                                "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
+                                "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+                                "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+                                "Uttar Pradesh", "Uttarakhand", "West Bengal","Others"
+                                };
+
+                                    var modelState = Model.PresentState?.ToString().Replace(" ", string.Empty); // Convert the enum to a string and remove spaces
+                                }
+
+                                @foreach (var stateOption in stateOptions)
+                                {
+                                    var stateOptionValue = stateOption.Replace(" ", string.Empty);
+                                    if (stateOptionValue == modelState)
+                                    {
+                                        <option value="@stateOptionValue" selected>@stateOption</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@stateOptionValue">@stateOption</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+                    <!-- Country -->
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="CountryId">Country<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1" style="margin-right: -28px;">
+                            <select name="CountryId" id="CountryID" class="form-input" required>
+                                <option value="">Please Select</option>
+                                @if (ViewBag.CurrentCountry != null)
+                                {
+                                    <option value="@ViewBag.CurrentCountry.CountryID" selected>@ViewBag.CurrentCountry.CountryName</option>
+                                }
+
+                                @foreach (CountryResponse country in ViewBag.CountryList)
+                                {
+
+                                    if (ViewBag.CurrentCountry != null && country.CountryID == ViewBag.CurrentCountry.CountryID)
+                                    {
+                                        continue;
+                                    }
+                                    <option value="@country.CountryID">@country.CountryName</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PresentPincode">Pincode <span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PresentPincode" name="PresentPincode" class="form-input" value="@Model.PresentPincode" />
+                        </div>
+                        <!-- Other present address fields -->
+                        <!-- Add other present address fields similarly -->
+                    </div>
+                </div>
+                <div class="form-field flex">
+                    <div class="w-25"></div>
+                    <div class="flex-1">
+                        <button class="button button-blue-back">Update</button>
+                        @if (ViewBag.Errors != null)
+                        {
+                            <div class="text-red ml">
+                                <ul>
+                                    @foreach (string error in ViewBag.Errors)
+                                    {
+                                        <li class="ml">@error</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="patient-form4">
+                <!-- Permanent Address -->
+                <div class="flex-11">
+                    <h3 style="text-align:center;margin-top: -20px;">Permanent Address</h3>
+                    <div class="form-field flex">
+
+
+                        <div class="w-251"></div>
+                        <div class="flex-11">
+                            <label>
+                                <input type="checkbox" id="autoFillCheckbox" onchange="copyPresentAddress()" />  same as the present address
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-field flex">
+                        <!-- Permanent Door No -->
+                        <div class="w-25">
+                            <label for="PermanentDoorNo"> Door No<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentDoorNo" name="PermanentDoorNo" class="form-input" value="@Model.PermanentDoorNo" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentStreetName"> Street Name<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentStreetName" name="PermanentStreetName" class="form-input" value="@Model.PermanentStreetName" required/>
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentVillageTown">Village/Town<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentVillageTown" name="PermanentVillageTown" class="form-input" value="@Model.PermanentVillageTown" required />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentPostOffice"> Post Office</label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentPostOffice" name="PermanentPostOffice" class="form-input" value="@Model.PermanentPostOffice" />
+                        </div>
+                    </div>
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentTaluk">Taluk </label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentTaluk" name="PermanentTaluk" class="form-input" value="@Model.PermanentTaluk" />
+                        </div>
+                    </div>
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentDistrict">District </label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentDistrict" name="PermanentDistrict" class="form-input" value="@Model.PermanentDistrict" />
+                        </div>
+                    </div>
+
+                    
+
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentState">State<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <select id="PermanentState" name="PermanentState" class="form-input" required>
+                                <option value="" disabled hidden>Please Select</option>
+
+                                @{
+                                    var stateOptions1 = new List<string>
+                                {
+                                "Andhra Pradesh", "Arunachal Pradesh", "Assam", "Bihar",
+                                "Chhattisgarh", "Goa", "Gujarat", "Haryana", "Himachal Pradesh",
+                                "Jharkhand", "Karnataka", "Kerala", "Madhya Pradesh", "Maharashtra",
+                                "Manipur", "Meghalaya", "Mizoram", "Nagaland", "Odisha", "Punjab",
+                                "Rajasthan", "Sikkim", "Tamil Nadu", "Telangana", "Tripura",
+                                "Uttar Pradesh", "Uttarakhand", "West Bengal","Others"
+                                };
+
+                                    var modelState1 = Model.PermanentState?.ToString().Replace(" ", string.Empty); // Convert the enum to a string and remove spaces
+                                }
+
+                                @foreach (var stateOption in stateOptions1)
+                                {
+                                    var stateOptionValue = stateOption.Replace(" ",                                           string.Empty);
+                                    if (stateOptionValue == modelState1)
+                                    {
+                                        <option value="@stateOptionValue"                                          selected>@stateOption</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@stateOptionValue">@stateOption</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    
+
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentCountry">Country<span class="required"></span></label>
+                        </div>
+                        <div class="flex-1">
+                            <select id="PermanentCountry" name="PermanentCountry" class="form-input" required>
+                                <option value="" disabled hidden>Please Select</option>
+
+                                @{
+                                    var countryOptions = new List<string>
+                                {
+                                "Philippines",
+                                "Thailand",
+                                "China",
+                                "Palestinian Territory",
+                                "India"
+                                
+                                };
+
+                                    var modelCountry = Model.PermanentCountry?.ToString().Replace(" ", string.Empty); // Convert the enum to a string and remove spaces
+                                }
+
+                                @foreach (var countryOption in countryOptions)
+                                {
+                                    var countryOptionValue = countryOption.Replace(" ", string.Empty);
+                                    if (countryOptionValue == modelCountry)
+                                    {
+                                        <option value="@countryOptionValue" selected>@countryOption</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@countryOptionValue">@countryOption</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="form-field flex">
+                        <div class="w-25">
+                            <label for="PermanentPincode">Pincode<span class="required"></span> </label>
+                        </div>
+                        <div class="flex-1">
+                            <input type="text" id="PermanentPincode" name="PermanentPincode" class="form-input" value="@Model.PermanentPincode" required />
+                        </div>
+                    </div>
+                    <!-- Other permanent address fields -->
+                    <!-- Add other permanent address fields similarly -->
+                </div>
+            </div>
+            
+
+        </div>
+        
+
+    </form>
+</div>
+<script>
+    // Function to copy present address to permanent address fields
+    function copyPresentAddress() {
+        if (document.getElementById('autoFillCheckbox').checked) {
+            // Copy present address fields to permanent address fields
+            document.getElementById('PermanentDoorNo').value = document.getElementById('PresentDoorNo').value;
+            document.getElementById('PermanentStreetName').value = document.getElementById('PresentStreetName').value;
+            document.getElementById('PermanentVillageTown').value = document.getElementById('PresentVillageTown').value;
+            document.getElementById('PermanentPostOffice').value = document.getElementById('PresentPostOffice').value;
+            document.getElementById('PermanentTaluk').value = document.getElementById('PresentTaluk').value;
+            document.getElementById('PermanentDistrict').value = document.getElementById('PresentDistrict').value;
+            document.getElementById('PermanentState').value = document.getElementById('PresentState').value;
+            document.getElementById('PermanentPincode').value = document.getElementById('PresentPincode').value;
+            var presentCountry = document.getElementById('CountryID');
+            var permanentCountry = document.getElementById('PermanentCountry');
+            var selectedCountry = presentCountry.options[presentCountry.selectedIndex].text;
+            permanentCountry.value = selectedCountry;
+        } else {
+            // Clear permanent address fields
+            document.getElementById('PermanentDoorNo').value = '';
+            document.getElementById('PermanentStreetName').value = '';
+            document.getElementById('PermanentVillageTown').value = '';
+            document.getElementById('PermanentPostOffice').value = '';
+            document.getElementById('PermanentTaluk').value = '';
+            document.getElementById('PermanentDistrict').value = '';
+            document.getElementById('PermanentState').value = '';
+            document.getElementById('PermanentPincode').value = '';
+            document.getElementById('PermanentCountry').value = '';
+        }
+    }
+
+
+
+
+
+    function hidePlaceholder() {
+        // Hide the "Please Select" option
+        document.getElementById("Religion").removeAttribute("hidden");
+    }
+
+
+
+
+    var cssUrl = '@Url.Content("~/edit.css")';
+    // Call the addStylesheet function with the correct URL
+    addStylesheet(cssUrl);
+
+
+
+  
+        function handleOccupationChange(selectId, textId) {
+            var occupationSelect = document.getElementById(selectId);
+            var occupationText = document.getElementById(textId);
+
+            if (occupationSelect.value === "Other") {
+                occupationSelect.style.display = "none";
+                occupationText.style.display = "block";
+                occupationText.value = "";  // Clear the text box when it becomes visible
+            } else {
+                occupationSelect.style.display = "block";
+                occupationText.style.display = "none";
+            }
+        }
+
+
+
+</script>
+
+
+
+

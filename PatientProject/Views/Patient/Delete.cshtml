@@ -1,0 +1,70 @@
+﻿@model PatientResponse
+
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete Patient";
+    ViewBag.CurrentUrl = "~/patient/delete";
+}
+
+
+
+
+<div id="dynamic-css"></div>
+<div class="icon-container1">
+    <a href="~/patient/index" style="color: red;font-size: 30px;"> <i class="fa fa-window-close" aria-hidden="true"></i></a>
+</div>
+
+<form action="~/patients/delete/@Model.PatientId" method="post">
+    <!-- Patient Name -->
+    <div class="patient-details">
+    
+
+    <div class="info-block">
+        <h3>Patient Details</h3>
+        <div class="patient-info">
+            <div class="info-item">
+                <label>Title:</label>
+                <p>@(Model.Title != null ? Model.Title.ToString() : "N/A")</p>
+            </div>
+            <div class="info-item">
+                <label>Name:</label>
+                <p>@Model.PatientName</p>
+            </div>
+
+            <div class="info-item">
+                <label>Email:</label>
+                <p>@Model.Email</p>
+            </div>
+
+
+        <!-- Submit Button -->
+        <div class="form-field flex">
+            <div class="w-25"></div>
+            <div class="flex-1">
+                <button class="button button-blue-back">Delete</button>
+                @if (ViewBag.Errors != null)
+                {
+                    <div class="text-red ml">
+                        <ul>
+                            @foreach (string error in ViewBag.Errors)
+                            {
+                                <li class="ml">@error</li>
+                            }
+                        </ul>
+                    </div>
+                }
+            </div>
+        </div>
+</div>
+
+
+    
+</form>
+<script>
+    var cssUrl = '@Url.Content("~/delete.css")';
+    // Call the addStylesheet function with the correct URL
+    addStylesheet(cssUrl);
+</script>
+
+
